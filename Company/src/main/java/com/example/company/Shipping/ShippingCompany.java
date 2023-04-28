@@ -1,7 +1,6 @@
 package com.example.company.Shipping;
 
 
-import com.example.company.Product.Product;
 import jakarta.ejb.Stateful;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

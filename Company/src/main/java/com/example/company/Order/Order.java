@@ -1,8 +1,11 @@
 package com.example.company.Order;
 
 import com.example.company.Product.Product;
+import jakarta.ejb.Stateless;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Stateless
 public class Order {
 
     @Id

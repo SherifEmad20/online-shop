@@ -1,6 +1,5 @@
 package com.example.company.Product;
 
-import com.example.company.Selling.SellingCompany;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;

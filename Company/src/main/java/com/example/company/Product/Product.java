@@ -4,6 +4,7 @@ import com.example.company.Customer.Customer;
 import com.example.company.Order.Order;
 import com.example.company.Selling.SellingCompany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.ejb.Stateless;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Stateless
 public class Product {
 
     @Id

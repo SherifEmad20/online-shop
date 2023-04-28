@@ -1,5 +1,6 @@
 package com.example.company.Admin;
 
+import jakarta.ejb.Singleton;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Singleton
 public class Admin {
 
     @Id

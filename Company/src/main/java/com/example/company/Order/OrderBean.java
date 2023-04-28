@@ -106,6 +106,7 @@ public class OrderBean {
                 // Set the order for the product to this order
                 product.setOrder(order);
                 orderProducts.add(product);
+                product.setProductQuantity(product.getProductQuantity() - 1);
             }
             order.setProducts(orderProducts);
 

@@ -2,17 +2,15 @@ package com.example.company.Customer;
 
 import com.example.company.Order.Order;
 import com.example.company.Product.Product;
-import com.example.company.Shipping.ShippingCompany;
-import jakarta.ejb.MessageDriven;
+import jakarta.ejb.EJB;
 import jakarta.ejb.Stateful;
 import jakarta.enterprise.context.SessionScoped;
-import jakarta.jms.Message;
-import jakarta.jms.MessageListener;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.core.Context;
 
-import javax.management.Notification;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +22,9 @@ public class CustomerBean implements Serializable {
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("companyPU");
     private final EntityManager entityManager = emf.createEntityManager();
 
+    @EJB
+    private Customer customer;
+
     public String registerCustomer(Customer customer) {
         entityManager.getTransaction().begin();
         entityManager.persist(customer);
@@ -31,9 +32,11 @@ public class CustomerBean implements Serializable {
         return "Customer registered successfully!\n" + "Welcome Customer: " + customer.getUsername();
     }
 
-    public String loginCustomer(Customer customer) {
+    public String loginCustomer(@Context HttpServletRequest request, Customer customer) {
         Customer customerFromDB = entityManager.find(Customer.class, customer.getUsername());
         if (customerFromDB.getPassword().equals(customer.getPassword())) {
+            this.customer = customerFromDB;
+            request.getSession(true).setAttribute("customer", customer);
             return "Customer logged in successfully!";
         } else {
             return "Customer login failed!";
@@ -44,9 +47,13 @@ public class CustomerBean implements Serializable {
         return entityManager.createQuery("SELECT c FROM Customer c", Customer.class).getResultList();
     }
 
-    public String updateCustomer(String username, Customer customer) {
+    public String updateCustomer(@Context HttpServletRequest request, String username, Customer customer) {
         try {
+            if (request.getSession().getAttribute("customer") == null)
+                return "Please login first!";
+
             Customer customerFromDB = entityManager.find(Customer.class, username);
+            this.customer = customerFromDB;
             customerFromDB.setUsername(customer.getUsername());
             customerFromDB.setEmail(customer.getEmail());
             customerFromDB.setPassword(customer.getPassword());
@@ -61,10 +68,14 @@ public class CustomerBean implements Serializable {
         }
     }
 
-    public String addToCart(String username, Long productId) {
+    public String addToCart(@Context HttpServletRequest request, String username, Long productId) {
         try {
+            if (request.getSession().getAttribute("customer") == null)
+                return "Please login first!";
+
             Product product = entityManager.find(Product.class, productId);
             Customer customerFromDB = entityManager.find(Customer.class, username);
+            this.customer = customerFromDB;
             product.setCustomer(customerFromDB);
             customerFromDB.getCart().add(product);
             entityManager.getTransaction().begin();
@@ -77,10 +88,14 @@ public class CustomerBean implements Serializable {
         }
     }
 
-    public String deleteFromCart(String username, Long productId) {
+    public String deleteFromCart(@Context HttpServletRequest request, String username, Long productId) {
         try {
+            if (request.getSession().getAttribute("customer") == null)
+                return "Please login first!";
+
             Product product = entityManager.find(Product.class, productId);
             Customer customerFromDB = entityManager.find(Customer.class, username);
+            this.customer = customerFromDB;
             product.setCustomer(null);
             customerFromDB.getCart().remove(product);
             entityManager.getTransaction().begin();
@@ -93,37 +108,44 @@ public class CustomerBean implements Serializable {
         }
     }
 
-    public List<Order> getAllShippingOrders() {
+    public List<Order> getAllShippingOrders(@Context HttpServletRequest request) {
+        if (request.getSession().getAttribute("customer") == null)
+            return null;
         return entityManager.createQuery("SELECT o FROM Order o WHERE o.orderStatus = 'shipping'", Order.class).getResultList();
     }
 
-    public List<Order> getAllPendingOrders() {
+    public List<Order> getAllPendingOrders(@Context HttpServletRequest request) {
+        if (request.getSession().getAttribute("customer") == null)
+            return null;
         return entityManager.createQuery("SELECT o FROM Order o WHERE o.orderStatus = 'pending'", Order.class).getResultList();
     }
 
-//    // get messages from notification
-//    public List<String> getAllNotifications(String username) {
-//        // get customer from db
-//        Customer customerFromDB = entityManager.find(Customer.class, username);
-//        // get notifications from db
-//        List<String> messages = entityManager.createQuery("SELECT n.message FROM Notifications n", String.class).getResultList();
-//        return messages;
-//    }
-
 
     // return customer cart
-    public List<Product> getCustomerCart(String username) {
+    public List<Product> getCustomerCart(@Context HttpServletRequest request, String username) {
+        if (request.getSession().getAttribute("customer") == null)
+            return null;
+
         // get customer from db
         Customer customerFromDB = entityManager.find(Customer.class, username);
+        this.customer = customerFromDB;
         // get cart from customer
         List<Product> cart = customerFromDB.getCart();
         return cart;
     }
 
     // get all notification messages for a customer
-    public List<String> getAllNotifications(String username) {
+    public List<String> getAllNotifications(@Context HttpServletRequest request, String username) {
+        if (request.getSession().getAttribute("customer") == null) {
+            // create a list and add a message please login first
+            List<String> notifications = new ArrayList<>();
+            notifications.add("Please login first!");
+            return notifications;
+        }
+
         // get customer from db
         Customer customerFromDB = entityManager.find(Customer.class, username);
+        this.customer = customerFromDB;
         // get notifications from db
         List<String> notifications = new ArrayList<>();
         for (int i = 0; i < customerFromDB.getNotifications().size(); i++) {

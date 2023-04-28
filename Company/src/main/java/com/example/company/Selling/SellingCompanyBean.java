@@ -18,6 +18,7 @@ public class SellingCompanyBean implements Serializable {
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("companyPU");
     private final EntityManager entityManager = emf.createEntityManager();
 
+
     public String generateRandomPassword(int length) {
         String allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+-=[]{}|;,./<>?";
         SecureRandom random = new SecureRandom();
@@ -59,6 +60,7 @@ public class SellingCompanyBean implements Serializable {
 
     // update selling company
     public String updateSellingCompany(SellingCompany sellingCompany) {
+
         SellingCompany sellingCompanyFromDB = entityManager.find(SellingCompany.class, sellingCompany.getCompanyName());
         entityManager.getTransaction().begin();
         sellingCompanyFromDB.setCompanyName(sellingCompany.getCompanyName());
@@ -79,10 +81,12 @@ public class SellingCompanyBean implements Serializable {
 
     // add product to selling company
     public String addProduct(String username, Product product) {
-        entityManager.getTransaction().begin();
         SellingCompany company = entityManager.find(SellingCompany.class, username);
+
         product.setSellingCompany(company);
         company.getProducts().add(product);
+
+        entityManager.getTransaction().begin();
         entityManager.merge(company);
         entityManager.getTransaction().commit();
         return "Product added successfully!";
@@ -90,11 +94,12 @@ public class SellingCompanyBean implements Serializable {
 
     // update product by id
     public String updateProduct(Long id, Product product) {
+
         Product product1 = entityManager.find(Product.class, id);
-        entityManager.getTransaction().begin();
         product1.setProductName(product.getProductName());
         product1.setProductPrice(product.getProductPrice());
         product1.setProductQuantity(product.getProductQuantity());
+        entityManager.getTransaction().begin();
         entityManager.merge(product1);
         entityManager.getTransaction().commit();
         return "Product updated successfully!";
@@ -102,6 +107,7 @@ public class SellingCompanyBean implements Serializable {
 
     // delete product
     public String deleteProduct(Long id) {
+
         Product product = entityManager.find(Product.class, id);
         entityManager.getTransaction().begin();
         entityManager.remove(product);

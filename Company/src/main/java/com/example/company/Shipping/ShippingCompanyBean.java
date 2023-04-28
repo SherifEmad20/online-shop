@@ -143,5 +143,4 @@ public class ShippingCompanyBean implements Serializable {
         return "Shipping Company can't deliver to your location";
 
     }
-
 }
