@@ -93,7 +93,7 @@ public class ShippingCompanyBean implements Serializable {
         return "Location added successfully!";
     }
 
-    public void submitOrder(String request) {
+    public void submitOrder(String notification) {
         try {
             Context context = new InitialContext();
             ConnectionFactory connectionFactory = (ConnectionFactory) context.lookup("java:/ConnectionFactory");
@@ -101,7 +101,7 @@ public class ShippingCompanyBean implements Serializable {
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             MessageProducer producer = session.createProducer(this.queue);
             ObjectMessage message = session.createObjectMessage();
-            message.setObject(request);
+            message.setObject(notification);
             producer.send(message);
             session.close();
             connection.close();
