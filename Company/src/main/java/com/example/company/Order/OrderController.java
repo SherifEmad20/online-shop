@@ -1,6 +1,7 @@
 package com.example.company.Order;
 
 import jakarta.ejb.EJB;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
@@ -9,6 +10,7 @@ import java.util.List;
 @Path("/order")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@RequestScoped
 public class OrderController {
 
     @EJB
@@ -38,11 +40,11 @@ public class OrderController {
         return orderBean.getAllOrders();
     }
 
-    @POST
-    @Path("/makeOrder/{username}")
-    public String makeOrder(@PathParam("username") String username) {
-        return orderBean.makeOrder(username);
-    }
+//    @POST
+//    @Path("/makeOrder/{username}")
+//    public String makeOrder(@PathParam("username") String username) {
+//        return orderBean.makeOrder(username);
+//    }
 
     @GET
     @Path("/getOrdersByCustomer/{username}")
