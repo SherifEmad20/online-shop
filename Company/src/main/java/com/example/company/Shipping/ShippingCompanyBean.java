@@ -1,10 +1,13 @@
 package com.example.company.Shipping;
 
 import jakarta.ejb.Stateful;
+import jakarta.jms.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import java.security.SecureRandom;
 import java.util.List;
 
@@ -80,4 +83,5 @@ public class ShippingCompanyBean {
         entityManager.getTransaction().commit();
         return "Location added successfully!";
     }
+
 }

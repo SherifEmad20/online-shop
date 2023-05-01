@@ -1,12 +1,9 @@
 package com.example.company.Admin;
 
-import jakarta.ejb.EJB;
 import jakarta.ejb.Singleton;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.ws.rs.core.Context;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -20,8 +17,6 @@ public class AdminBean {
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("companyPU");
     private final EntityManager entityManager = emf.createEntityManager();
 
-    @EJB
-    Admin admin;
 
     public String registerAdmin(Admin admin) {
         entityManager.getTransaction().begin();
@@ -30,11 +25,9 @@ public class AdminBean {
         return "Admin registered successfully!";
     }
 
-    public String loginAdmin(@Context HttpServletRequest request, Admin admin) {
+    public String loginAdmin(Admin admin) {
         Admin adminFromDB = entityManager.find(Admin.class, admin.getEmail());
         if (adminFromDB.getPassword().equals(admin.getPassword())) {
-            this.admin = adminFromDB;
-            request.getSession(true).setAttribute("admin", adminFromDB);
             return "Admin logged in successfully!";
         } else {
             return "Admin login failed!";
@@ -52,12 +45,12 @@ public class AdminBean {
 
     }
 
-    public String updateAdmin(@Context HttpServletRequest request, Admin admin) {
+    public String updateAdmin(Admin admin) {
         entityManager.getTransaction().begin();
-        this.admin.setEmail(admin.getEmail());
-        this.admin.setName(admin.getName());
-        this.admin.setPassword(admin.getPassword());
-        entityManager.merge(this.admin);
+        admin.setEmail(admin.getEmail());
+        admin.setName(admin.getName());
+        admin.setPassword(admin.getPassword());
+        entityManager.merge(admin);
         entityManager.getTransaction().commit();
         return "Admin updated successfully!";
     }
@@ -70,9 +63,8 @@ public class AdminBean {
     }
 
 
-    public String callCreateSelling(@Context HttpServletRequest request, String requestBody) throws Exception {
+    public String callCreateSelling(String requestBody) throws Exception {
 
-        if (request.getSession().getAttribute("admin") == null) return "Please login first!";
 
         String BASE_URL = "http://localhost:18072/Company-1.0-SNAPSHOT/api/sellingCompany";
         HttpResponse<String> response = HttpClient.newHttpClient().send(HttpRequest.newBuilder()
@@ -85,8 +77,7 @@ public class AdminBean {
         return response.body();
     }
 
-    public String callCreateShipping(@Context HttpServletRequest request, String requestBody) throws Exception {
-        if (request.getSession().getAttribute("admin") == null) return "Please login first!";
+    public String callCreateShipping(String requestBody) throws Exception {
 
         String BASE_URL = "http://localhost:18072/Company-1.0-SNAPSHOT/api/shippingCompany";
         HttpResponse<String> response = HttpClient.newHttpClient().send(HttpRequest.newBuilder()
@@ -99,8 +90,7 @@ public class AdminBean {
         return response.body();
     }
 
-    public String getSellingCompanies(@Context HttpServletRequest request) throws Exception {
-        if (request.getSession().getAttribute("admin") == null) return "Please login first!";
+    public String getSellingCompanies() throws Exception {
 
         String BASE_URL = "http://localhost:18072/Company-1.0-SNAPSHOT/api/sellingCompany";
         HttpResponse<String> response = HttpClient.newHttpClient().send(HttpRequest.newBuilder()
@@ -113,8 +103,7 @@ public class AdminBean {
         return response.body();
     }
 
-    public String getShippingCompanies(@Context HttpServletRequest request) throws Exception {
-        if (request.getSession().getAttribute("admin") == null) return "Please login first!";
+    public String getShippingCompanies() throws Exception {
 
         String BASE_URL = "http://localhost:18072/Company-1.0-SNAPSHOT/api/shippingCompany";
         HttpResponse<String> response = HttpClient.newHttpClient().send(HttpRequest.newBuilder()
@@ -127,8 +116,7 @@ public class AdminBean {
         return response.body();
     }
 
-    public String getAllCustomers(@Context HttpServletRequest request) throws Exception {
-        if (request.getSession().getAttribute("admin") == null) return "Please login first!";
+    public String getAllCustomers() throws Exception {
 
         String BASE_URL = "http://localhost:18072/Company-1.0-SNAPSHOT/api/customer";
         HttpResponse<String> response = HttpClient.newHttpClient().send(HttpRequest.newBuilder()

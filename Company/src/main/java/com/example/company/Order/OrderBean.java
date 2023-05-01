@@ -126,26 +126,26 @@ public class OrderBean {
 //        }
 //    }
 
-    // return order made by customer with username
-    public List<Order> getOrdersByCustomer(String username) {
-        return entityManager.createQuery("SELECT o FROM Order o WHERE o.customerUsername = :username", Order.class)
-                .setParameter("username", username)
-                .getResultList();
-    }
-
-    // return order made by customer with username and the order status is pending
-    public List<Order> getPendingOrdersByCustomer(String username) {
-        return entityManager.createQuery("SELECT o FROM Order o WHERE o.customerUsername = :username AND o.orderStatus = :status", Order.class)
-                .setParameter("username", username)
-                .setParameter("status", "pending")
-                .getResultList();
-    }
-
-    public List<Order> getShippingOrdersByCustomer(String username) {
-        return entityManager.createQuery("SELECT o FROM Order o WHERE o.customerUsername = :username AND o.orderStatus = :status", Order.class)
-                .setParameter("username", username)
-                .setParameter("status", "shipping")
-                .getResultList();
-    }
+//    // return order made by customer with username
+//    public List<Order> getOrdersByCustomer(String username) {
+//        return entityManager.createQuery("SELECT o FROM Order o WHERE o.customerUsername = :username", Order.class)
+//                .setParameter("username", username)
+//                .getResultList();
+//    }
+//
+//    // return order made by customer with username and the order status is pending
+//    public List<Order> getPendingOrdersByCustomer(String username) {
+//        return entityManager.createQuery("SELECT o FROM Order o WHERE o.customerUsername = :username AND o.orderStatus = :status", Order.class)
+//                .setParameter("username", username)
+//                .setParameter("status", "pending")
+//                .getResultList();
+//    }
+//
+//    public List<Order> getShippingOrdersByCustomer(String username) {
+//        return entityManager.createQuery("SELECT o FROM Order o WHERE o.customerUsername = :username AND o.orderStatus = :status", Order.class)
+//                .setParameter("username", username)
+//                .setParameter("status", "shipping")
+//                .getResultList();
+//    }
 
 }

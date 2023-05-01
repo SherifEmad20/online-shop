@@ -19,9 +19,7 @@ import java.io.Serializable;
                 @jakarta.ejb.ActivationConfigProperty(propertyName = "destination", propertyValue = "java:/jms/queue/myOrders")
         },
         mappedName = "java:/jms/queue/myOrders", name = "OrderMessageBean")
-@SessionScoped
-@Stateful
-public class NotificationBean implements MessageListener, Serializable {
+public class NotificationBean implements MessageListener{
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("companyPU");
     private final EntityManager entityManager = emf.createEntityManager();
 

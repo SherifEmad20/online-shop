@@ -43,11 +43,13 @@ public class CustomerBean {
         if (customerFromDB.getPassword().equals(customer.getPassword())) {
             this.customer = customerFromDB;
             request.getSession(true).setAttribute("customer", customer);
+
             return "Customer logged in successfully!";
         } else {
             return "Customer login failed!";
         }
     }
+
 
     public List<Customer> getAllCustomers(@Context HttpServletRequest request) {
         if (request.getSession().getAttribute("customer") == null)
@@ -114,13 +116,17 @@ public class CustomerBean {
     public List<Order> getAllShippingOrders(@Context HttpServletRequest request) {
         if (request.getSession().getAttribute("customer") == null)
             return null;
-        return entityManager.createQuery("SELECT o FROM Order o WHERE o.orderStatus = 'shipping'", Order.class).getResultList();
+        return entityManager.createQuery("SELECT o FROM Order o JOIN o.customers c WHERE c.username = :username AND o.orderStatus = 'shipping'", Order.class)
+                .setParameter("username", this.customer.getUsername())
+                .getResultList();
     }
 
     public List<Order> getAllPendingOrders(@Context HttpServletRequest request) {
         if (request.getSession().getAttribute("customer") == null)
             return null;
-        return entityManager.createQuery("SELECT o FROM Order o WHERE o.orderStatus = 'pending'", Order.class).getResultList();
+        return entityManager.createQuery("SELECT o FROM Order o JOIN o.customers c WHERE c.username = :username AND o.orderStatus = 'pending'", Order.class)
+                .setParameter("username", this.customer.getUsername())
+                .getResultList();
     }
 
 

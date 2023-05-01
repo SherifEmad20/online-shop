@@ -46,23 +46,23 @@ public class OrderController {
 //        return orderBean.makeOrder(username);
 //    }
 
-    @GET
-    @Path("/getOrdersByCustomer/{username}")
-    public List<Order> getOrdersByCustomer(@PathParam("username") String username) {
-        return orderBean.getOrdersByCustomer(username);
-    }
+//    @GET
+//    @Path("/getOrdersByCustomer/{username}")
+//    public List<Order> getOrdersByCustomer(@PathParam("username") String username) {
+//        return orderBean.getOrdersByCustomer(username);
+//    }
+//
+//    @GET
+//    @Path("/getPendingOrders/{username}")
+//    public List<Order> getPendingOrders(@PathParam("username") String username) {
+//        return orderBean.getPendingOrdersByCustomer(username);
+//    }
 
-    @GET
-    @Path("/getPendingOrders/{username}")
-    public List<Order> getPendingOrders(@PathParam("username") String username) {
-        return orderBean.getPendingOrdersByCustomer(username);
-    }
-
-    @GET
-    @Path("/getShippingOrders/{username}")
-    public List<Order> getShippingOrders(@PathParam("username") String username) {
-        return orderBean.getShippingOrdersByCustomer(username);
-    }
+//    @GET
+//    @Path("/getShippingOrders/{username}")
+//    public List<Order> getShippingOrders(@PathParam("username") String username) {
+//        return orderBean.getShippingOrdersByCustomer(username);
+//    }
 
 
 }

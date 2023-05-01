@@ -12,8 +12,8 @@ import java.util.List;
 @Path("/sellingCompany")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@SessionScoped
-public class SellingCompanyController implements Serializable {
+
+public class SellingCompanyController  {
 
     @EJB
     private SellingCompanyBean sellingCompanyBean;

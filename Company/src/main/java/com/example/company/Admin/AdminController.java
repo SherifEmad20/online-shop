@@ -2,9 +2,7 @@ package com.example.company.Admin;
 
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 
 import java.util.List;
@@ -26,8 +24,8 @@ public class AdminController {
 
     @POST
     @Path("/login")
-    public String loginAdmin(@Context HttpServletRequest request, Admin admin) {
-        return adminBean.loginAdmin(request, admin);
+    public String loginAdmin(Admin admin) {
+        return adminBean.loginAdmin(admin);
     }
 
     @GET
@@ -48,9 +46,9 @@ public class AdminController {
 
     @PUT
     @Path("/updateAdmin")
-    public String updateAdmin(@Context HttpServletRequest request, Admin admin) {
+    public String updateAdmin(Admin admin) {
 
-        return adminBean.updateAdmin(request, admin);
+        return adminBean.updateAdmin(admin);
 
     }
 
@@ -64,38 +62,38 @@ public class AdminController {
 
     @POST
     @Path("/createSellingCompany")
-    public String callCreateSelling(@Context HttpServletRequest request, String requestBody) throws Exception {
+    public String callCreateSelling(String requestBody) throws Exception {
 
-        return adminBean.callCreateSelling(request, requestBody);
+        return adminBean.callCreateSelling(requestBody);
 
     }
 
     @POST
     @Path("/createShippingCompany")
-    public String callCreateShipping(@Context HttpServletRequest request, String requestBody) throws Exception {
+    public String callCreateShipping(String requestBody) throws Exception {
 
-        return adminBean.callCreateShipping(request, requestBody);
+        return adminBean.callCreateShipping(requestBody);
 
     }
 
     @GET
     @Path("/getSellingCompanies")
-    public String getSellingCompanies(@Context HttpServletRequest request) throws Exception {
+    public String getSellingCompanies() throws Exception {
 
-        return adminBean.getSellingCompanies(request);
+        return adminBean.getSellingCompanies();
     }
 
     @GET
     @Path("/getShippingCompanies")
-    public String getShippingCompanies(@Context HttpServletRequest request) throws Exception {
+    public String getShippingCompanies() throws Exception {
 
-        return adminBean.getShippingCompanies(request);
+        return adminBean.getShippingCompanies();
     }
 
     @GET
     @Path("/getAllCustomers")
-    public String getAllCustomers(@Context HttpServletRequest request) throws Exception {
+    public String getAllCustomers() throws Exception {
 
-        return adminBean.getAllCustomers(request);
+        return adminBean.getAllCustomers();
     }
 }
