@@ -1,7 +1,9 @@
 package com.example.company.Customer;
 
 import com.example.company.Notifications.Notifications;
+import com.example.company.Order.Order;
 import com.example.company.Product.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.ejb.Stateful;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -31,5 +33,10 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Notifications> notifications = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Order order;
+
 
 }

@@ -1,15 +1,18 @@
 package com.example.company.Shipping;
 
 import jakarta.ejb.EJB;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Path("/shippingCompany")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class ShippingCompanyController {
+@SessionScoped
+public class ShippingCompanyController implements Serializable {
 
     @EJB
     private ShippingCompanyBean shippingCompanyBean;
@@ -55,14 +58,4 @@ public class ShippingCompanyController {
     public String addLocation(@PathParam("username") String username, Location location) {
         return shippingCompanyBean.addLocation(username, location);
     }
-
-    // make a shipping request
-    @POST
-    @Path("/makeShippingRequest/{shippingCompanyName}/{username}/{orderId}")
-    public String makeShippingRequest(@PathParam("shippingCompanyName") String shippingCompanyName,
-                                      @PathParam("username") String username,
-                                      @PathParam("orderId") Long orderId) {
-        return shippingCompanyBean.requestShipping(shippingCompanyName, username, orderId);
-    }
-
 }

@@ -1,31 +1,19 @@
 package com.example.company.Shipping;
 
-import com.example.company.Customer.Customer;
-import com.example.company.Order.Order;
-import jakarta.annotation.Resource;
 import jakarta.ejb.Stateful;
-import jakarta.enterprise.context.SessionScoped;
-import jakarta.jms.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import java.io.Serializable;
 import java.security.SecureRandom;
 import java.util.List;
 
 @Stateful
-@SessionScoped
-public class ShippingCompanyBean implements Serializable {
+public class ShippingCompanyBean {
 
 
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("companyPU");
     private final EntityManager entityManager = emf.createEntityManager();
-
-    @Resource(mappedName = "java:/jms/queue/myOrders")
-    private Queue queue;
 
     public String generateRandomPassword(int length) {
         String allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+-=[]{}|;:,./<>?";
@@ -91,56 +79,5 @@ public class ShippingCompanyBean implements Serializable {
         entityManager.merge(company);
         entityManager.getTransaction().commit();
         return "Location added successfully!";
-    }
-
-    public void submitOrder(String notification) {
-        try {
-            Context context = new InitialContext();
-            ConnectionFactory connectionFactory = (ConnectionFactory) context.lookup("java:/ConnectionFactory");
-            Connection connection = connectionFactory.createConnection();
-            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            MessageProducer producer = session.createProducer(this.queue);
-            ObjectMessage message = session.createObjectMessage();
-            message.setObject(notification);
-            producer.send(message);
-            session.close();
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String requestShipping(String shippingCompanyName, String username, Long orderId) {
-
-        Customer customer = entityManager.find(Customer.class, username);
-        ShippingCompany shippingCompany = entityManager.find(ShippingCompany.class, shippingCompanyName);
-        Order order = entityManager.find(Order.class, orderId);
-
-        if (shippingCompany == null) {
-            submitOrder(order.getCustomerUsername() + ","
-                    + shippingCompanyName + " doesn't exist");
-
-            return "Shipping Company not found!";
-
-        }
-
-        for (int i = 0; i < shippingCompany.getLocations().size(); i++) {
-            if (shippingCompany.getLocations().get(i).getLocationName().equals(customer.getAddress())) {
-                order.setOrderStatus("shipping");
-                entityManager.getTransaction().begin();
-                entityManager.merge(order);
-                entityManager.getTransaction().commit();
-
-                submitOrder(order.getCustomerUsername() + ", getting order shipped by company: "
-                        + shippingCompanyName);
-
-                return "Shipping requested successfully!";
-            }
-        }
-
-        submitOrder(order.getCustomerUsername() + ","
-                + shippingCompanyName + " doesn't deliver to your location");
-        return "Shipping Company can't deliver to your location";
-
     }
 }

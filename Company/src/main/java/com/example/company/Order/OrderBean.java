@@ -60,71 +60,71 @@ public class OrderBean {
         return entityManager.createQuery("SELECT o FROM Order o", Order.class).getResultList();
     }
 
-    public String deleteFromCart(String username, Long productId) {
-        try {
-            Product product = entityManager.find(Product.class, productId);
-            Customer customerFromDB = entityManager.find(Customer.class, username);
-            product.setCustomer(null);
-            customerFromDB.getCart().remove(product);
-            entityManager.getTransaction().begin();
-            entityManager.merge(customerFromDB);
-            entityManager.getTransaction().commit();
-            return "Product deleted from cart successfully!";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Product deletion from cart failed!";
-        }
-    }
-
-    public String makeOrder(String username) {
-        try {
-            Customer customer = entityManager.find(Customer.class, username);
-            if (customer.getCart().size() == 0) return "Please add products to your cart first!";
-
-            // calculate total price
-            double totalPrice = 0;
-            List<Product> cartProducts = customer.getCart();
-
-            for (Product product : cartProducts) {
-                totalPrice += product.getProductPrice();
-            }
-
-            if (customer.getBalance() < totalPrice) return "You don't have enough money to make this order!";
-
-            customer.setBalance(customer.getBalance() - totalPrice);
-
-            // create order
-            Order order = new Order();
-            order.setCustomerUsername(customer.getUsername());
-            order.setOrderDate(java.time.LocalDate.now().toString());
-            order.setOrderTotal(totalPrice);
-            order.setOrderStatus("pending");
-
-            // add products to order
-            List<Product> orderProducts = new ArrayList<>();
-            for (Product product : cartProducts) {
-                // Set the order for the product to this order
-                product.setOrder(order);
-                orderProducts.add(product);
-                product.setProductQuantity(product.getProductQuantity() - 1);
-            }
-            order.setProducts(orderProducts);
-
-            entityManager.getTransaction().begin();
-            entityManager.persist(order);
-            entityManager.getTransaction().commit();
-
-            // clear customer cart and add products to order
-            for (int i = 0; i < customer.getCart().size(); i++) {
-                deleteFromCart(username, customer.getCart().get(i).getProductId());
-            }
-
-            return "Order made successfully!";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Order making failed!";
-        }
-    }
+//    public String deleteFromCart(String username, Long productId) {
+//        try {
+//            Product product = entityManager.find(Product.class, productId);
+//            Customer customerFromDB = entityManager.find(Customer.class, username);
+//            product.setCustomer(null);
+//            customerFromDB.getCart().remove(product);
+//            entityManager.getTransaction().begin();
+//            entityManager.merge(customerFromDB);
+//            entityManager.getTransaction().commit();
+//            return "Product deleted from cart successfully!";
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return "Product deletion from cart failed!";
+//        }
+//    }
+//
+//    public String makeOrder(String username) {
+//        try {
+//            Customer customer = entityManager.find(Customer.class, username);
+//            if (customer.getCart().size() == 0) return "Please add products to your cart first!";
+//
+//            // calculate total price
+//            double totalPrice = 0;
+//            List<Product> cartProducts = customer.getCart();
+//
+//            for (Product product : cartProducts) {
+//                totalPrice += product.getProductPrice();
+//            }
+//
+//            if (customer.getBalance() < totalPrice) return "You don't have enough money to make this order!";
+//
+//            customer.setBalance(customer.getBalance() - totalPrice);
+//
+//            // create order
+//            Order order = new Order();
+//            order.setCustomerUsername(customer.getUsername());
+//            order.setOrderDate(java.time.LocalDate.now().toString());
+//            order.setOrderTotal(totalPrice);
+//            order.setOrderStatus("pending");
+//
+//            // add products to order
+//            List<Product> orderProducts = new ArrayList<>();
+//            for (Product product : cartProducts) {
+//                // Set the order for the product to this order
+//                product.setOrder(order);
+//                orderProducts.add(product);
+//                product.setProductQuantity(product.getProductQuantity() - 1);
+//            }
+//            order.setProducts(orderProducts);
+//
+//            entityManager.getTransaction().begin();
+//            entityManager.persist(order);
+//            entityManager.getTransaction().commit();
+//
+//            // clear customer cart and add products to order
+//            for (int i = 0; i < customer.getCart().size(); i++) {
+//                deleteFromCart(username, customer.getCart().get(i).getProductId());
+//            }
+//
+//            return "Order made successfully!";
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return "Order making failed!";
+//        }
+//    }
 
     // return order made by customer with username
     public List<Order> getOrdersByCustomer(String username) {

@@ -12,8 +12,7 @@ import java.security.SecureRandom;
 import java.util.List;
 
 @Stateful
-@SessionScoped
-public class SellingCompanyBean implements Serializable {
+public class SellingCompanyBean {
 
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("companyPU");
     private final EntityManager entityManager = emf.createEntityManager();

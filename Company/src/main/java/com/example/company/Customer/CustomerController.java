@@ -3,17 +3,20 @@ package com.example.company.Customer;
 import com.example.company.Order.Order;
 import com.example.company.Product.Product;
 import jakarta.ejb.EJB;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Path("/customer")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class CustomerController {
+@SessionScoped
+public class CustomerController implements Serializable {
 
     @EJB
     private CustomerBean customerBean;
@@ -34,29 +37,29 @@ public class CustomerController {
     // method to get all customers
     @GET
     @Path("/getAllCustomers")
-    public List<Customer> getAllCustomers() {
-        return customerBean.getAllCustomers();
+    public List<Customer> getAllCustomers(@Context HttpServletRequest request) {
+        return customerBean.getAllCustomers(request);
     }
 
     @PUT
-    @Path("/updateCustomer/{username}")
-    public String updateCustomer(@Context HttpServletRequest request, @PathParam("username") String username, Customer customer) {
-        return customerBean.updateCustomer(request, username, customer);
+    @Path("/updateCustomer")
+    public String updateCustomer(@Context HttpServletRequest request, Customer customer) {
+        return customerBean.updateCustomer(request, customer);
     }
 
     // add products to cart
     @PUT
-    @Path("/addToCart/{username}/{productId}")
-    public String addToCart(@Context HttpServletRequest request, @PathParam("username") String username, @PathParam("productId") Long productId) {
-        return customerBean.addToCart(request, username, productId);
+    @Path("/addToCart/{productId}")
+    public String addToCart(@Context HttpServletRequest request, @PathParam("productId") Long productId) {
+        return customerBean.addToCart(request, productId);
 
     }
 
     // delete products from cart
     @DELETE
-    @Path("/deleteFromCart/{username}/{productId}")
-    public String deleteFromCart(@Context HttpServletRequest request, @PathParam("username") String username, @PathParam("productId") Long productId) {
-        return customerBean.deleteFromCart(request, username, productId);
+    @Path("/deleteFromCart/{productId}")
+    public String deleteFromCart(@Context HttpServletRequest request, @PathParam("productId") Long productId) {
+        return customerBean.deleteFromCart(request, productId);
     }
 
     @GET
@@ -71,25 +74,31 @@ public class CustomerController {
         return customerBean.getAllPendingOrders(request);
     }
 
-//    // get notifications
-//    @GET
-//    @Path("/getNotifications/{username}")
-//    public List<String> getNotifications(@PathParam("username") String username) {
-//        return customerBean.getAllNotifications(username);
-//    }
-
-    // return customer cart
     @GET
-    @Path("/getCart/{username}")
-    public List<Product> getCart(@Context HttpServletRequest request, @PathParam("username") String username) {
-        return customerBean.getCustomerCart(request, username);
+    @Path("/getCart")
+    public List<Product> getCart(@Context HttpServletRequest request) {
+        return customerBean.getCustomerCart(request);
     }
 
     // get all notification messages for a customer
     @GET
-    @Path("/getNotifications/{username}")
-    public List<String> getNotifications(@Context HttpServletRequest request, @PathParam("username") String username) {
-        return customerBean.getAllNotifications(request, username);
+    @Path("/getNotifications")
+    public List<String> getNotifications(@Context HttpServletRequest request) {
+        return customerBean.getAllNotifications(request);
     }
+
+    @POST
+    @Path("/makeOrder")
+    public String makeOrder(@Context HttpServletRequest request) {
+        return customerBean.makeOrder(request);
+    }
+
+    // make a shipping request
+    @POST
+    @Path("/makeShippingRequest/{shippingCompanyName}")
+    public String makeShippingRequest(@PathParam("shippingCompanyName") String shippingCompanyName) {
+        return customerBean.requestShipping(shippingCompanyName);
+    }
+
 
 }

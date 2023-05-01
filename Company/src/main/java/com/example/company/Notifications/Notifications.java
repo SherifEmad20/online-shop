@@ -2,6 +2,7 @@ package com.example.company.Notifications;
 
 import com.example.company.Customer.Customer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.ejb.Stateful;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Stateful
 public class Notifications {
 
     @Id
