@@ -51,9 +51,7 @@ public class CustomerBean {
     }
 
 
-    public List<Customer> getAllCustomers(@Context HttpServletRequest request) {
-        if (request.getSession().getAttribute("customer") == null)
-            return null;
+    public List<Customer> getAllCustomers() {
 
         return entityManager.createQuery("SELECT c FROM Customer c", Customer.class).getResultList();
     }

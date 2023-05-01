@@ -23,7 +23,7 @@ function GetAdmins() {
 
 
   useEffect(()=>{
-    axios.get("http://localhost:18072/Company-1.0-SNAPSHOT/api/admin/getShippingCompanies").then((response)=>{
+    axiosInstance.get("http://localhost:18072/Company-1.0-SNAPSHOT/api/admin/getShippingCompanies").then((response)=>{
         setListOfAdmins(response.data);
     })
 

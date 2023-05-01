@@ -2,6 +2,7 @@ package com.example.company.Shipping;
 
 
 import jakarta.ejb.Stateful;
+import jakarta.ejb.Stateless;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Stateful
 public class ShippingCompany {
 
     @Id

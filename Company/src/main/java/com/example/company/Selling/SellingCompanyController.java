@@ -1,7 +1,9 @@
 package com.example.company.Selling;
 
 import com.example.company.Product.Product;
+import jakarta.annotation.ManagedBean;
 import jakarta.ejb.EJB;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -12,7 +14,8 @@ import java.util.List;
 @Path("/sellingCompany")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-
+@ManagedBean
+@RequestScoped
 public class SellingCompanyController  {
 
     @EJB

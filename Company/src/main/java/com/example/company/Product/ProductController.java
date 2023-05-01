@@ -1,5 +1,6 @@
 package com.example.company.Product;
 
+import jakarta.annotation.ManagedBean;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.ws.rs.*;
@@ -10,6 +11,7 @@ import java.util.List;
 @Path("/product")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@ManagedBean
 @RequestScoped
 public class ProductController {
 

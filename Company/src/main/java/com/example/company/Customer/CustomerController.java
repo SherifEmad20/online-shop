@@ -2,6 +2,7 @@ package com.example.company.Customer;
 
 import com.example.company.Order.Order;
 import com.example.company.Product.Product;
+import jakarta.annotation.ManagedBean;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import java.util.List;
 @Path("/customer")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@ManagedBean
 @SessionScoped
 public class CustomerController implements Serializable {
 
@@ -37,8 +39,8 @@ public class CustomerController implements Serializable {
     // method to get all customers
     @GET
     @Path("/getAllCustomers")
-    public List<Customer> getAllCustomers(@Context HttpServletRequest request) {
-        return customerBean.getAllCustomers(request);
+    public List<Customer> getAllCustomers() {
+        return customerBean.getAllCustomers();
     }
 
     @PUT

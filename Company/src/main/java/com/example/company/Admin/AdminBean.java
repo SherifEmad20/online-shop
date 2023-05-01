@@ -4,6 +4,8 @@ import jakarta.ejb.Singleton;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.core.Context;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -116,7 +118,7 @@ public class AdminBean {
         return response.body();
     }
 
-    public String getAllCustomers() throws Exception {
+    public String getAllCustomers(@Context HttpServletRequest request) throws Exception {
 
         String BASE_URL = "http://localhost:18072/Company-1.0-SNAPSHOT/api/customer";
         HttpResponse<String> response = HttpClient.newHttpClient().send(HttpRequest.newBuilder()

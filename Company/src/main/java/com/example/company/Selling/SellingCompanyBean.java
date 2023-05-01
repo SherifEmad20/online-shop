@@ -2,6 +2,7 @@ package com.example.company.Selling;
 
 import com.example.company.Product.Product;
 import jakarta.ejb.Stateful;
+import jakarta.ejb.Stateless;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -11,7 +12,7 @@ import java.io.Serializable;
 import java.security.SecureRandom;
 import java.util.List;
 
-@Stateful
+@Stateless
 public class SellingCompanyBean {
 
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("companyPU");

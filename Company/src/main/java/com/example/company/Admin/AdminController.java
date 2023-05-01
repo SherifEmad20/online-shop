@@ -1,8 +1,11 @@
 package com.example.company.Admin;
 
+import jakarta.annotation.ManagedBean;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 
 import java.util.List;
@@ -10,6 +13,7 @@ import java.util.List;
 @Path("/admin")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@ManagedBean
 @RequestScoped
 public class AdminController {
     @EJB
@@ -92,8 +96,8 @@ public class AdminController {
 
     @GET
     @Path("/getAllCustomers")
-    public String getAllCustomers() throws Exception {
+    public String getAllCustomers(@Context HttpServletRequest request) throws Exception {
 
-        return adminBean.getAllCustomers();
+        return adminBean.getAllCustomers(request);
     }
 }

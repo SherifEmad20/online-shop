@@ -15,13 +15,12 @@ function GetAdmins() {
         Cookie: `JSESSIONID=${sessionId}`
 
           },
-
       withCredentials: true
    })
 
 
   useEffect(()=>{
-    axios.get("http://localhost:18072/Company-1.0-SNAPSHOT/api/admin/getAllAdmins").then((response)=>{
+    axiosInstance.get("http://localhost:18072/Company-1.0-SNAPSHOT/api/admin/getAllAdmins").then((response)=>{
         setListOfAdmins(response.data);
     })
   },[])

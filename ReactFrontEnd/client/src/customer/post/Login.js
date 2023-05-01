@@ -93,7 +93,6 @@ function sleep(ms) {
             localStorage.clear();
             localStorage.setItem('loggedIn',username);
             console.log(response.headers);
-            Cookies.set('JSESSIONID', response.headers['set-cookie']);
             setReg(true);
            }
               else{

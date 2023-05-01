@@ -17,8 +17,11 @@ function GetAdmins() {
       headers: {
         'Content-Type': 'application/json',
         Cookie: `JSESSIONID=${sessionId}`
-
           },
+          params: {
+            sessionId
+          },
+
 
       withCredentials: true
    })

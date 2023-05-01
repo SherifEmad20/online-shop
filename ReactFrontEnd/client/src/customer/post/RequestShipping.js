@@ -102,7 +102,7 @@ function sleep(ms) {
     console.log(Company)
    
 
-      axios.post(`http://localhost:18072/Company-1.0-SNAPSHOT/api/shippingCompany/makeShippingRequest/${Company}/${currentComp}/${currentId}`).then((response)=>{
+      axiosInstance.post(`http://localhost:18072/Company-1.0-SNAPSHOT/api/customer/makeShippingRequest/${Company}`).then((response)=>{
         console.log(response.data);
         
          
@@ -131,6 +131,7 @@ function sleep(ms) {
       <a className='CustLink' href='/custHomePage'>Go to Home Page</a>
       <div className="input-container ic1">
         <select onChange={textChange}  autoComplete='off' id="companyName" className="input" type="text" placeholder=" " >
+            <option>Select Copmany</option>
             {
                  listOfAdmins.map((value, key)=>{
                     return <option>

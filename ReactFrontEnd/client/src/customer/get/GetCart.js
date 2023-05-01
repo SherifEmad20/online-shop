@@ -19,7 +19,6 @@ function GetAdmins() {
         Cookie: `JSESSIONID=${sessionId}`
 
           },
-
       withCredentials: true
    })
 
@@ -34,7 +33,7 @@ function GetAdmins() {
     })
 
 
-  },[])
+  },[sessionId])
 
   function click(){
     window.location='/custHomePage';
@@ -97,7 +96,7 @@ function GetAdmins() {
       </table>
       <button onClick={click} className='bt2'>Go to Home Page</button>
       <button onClick={()=>{
-        axios.post(`http://localhost:18072/Company-1.0-SNAPSHOT/api/order/makeOrder/${localStorage.getItem('loggedIn')}`).then((response)=>{
+        axiosInstance.post(`http://localhost:18072/Company-1.0-SNAPSHOT/api/customer/makeOrder`).then((response)=>{
             console.log(response.data)
             if(response.data === "Order made successfully!"){
 

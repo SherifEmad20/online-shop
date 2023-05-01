@@ -1,5 +1,7 @@
 package com.example.company.Shipping;
 
+import com.example.company.Customer.Customer;
+import jakarta.annotation.Resource;
 import jakarta.ejb.Stateful;
 import jakarta.jms.*;
 import jakarta.persistence.EntityManager;
@@ -17,6 +19,10 @@ public class ShippingCompanyBean {
 
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("companyPU");
     private final EntityManager entityManager = emf.createEntityManager();
+
+    @Resource(mappedName = "java:/jms/queue/myOrders")
+    private Queue queue;
+
 
     public String generateRandomPassword(int length) {
         String allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+-=[]{}|;:,./<>?";
@@ -83,5 +89,58 @@ public class ShippingCompanyBean {
         entityManager.getTransaction().commit();
         return "Location added successfully!";
     }
+
+
+//    public void submitOrder(String notification) {
+//        try {
+//            Context context = new InitialContext();
+//            ConnectionFactory connectionFactory = (ConnectionFactory) context.lookup("java:/ConnectionFactory");
+//            Connection connection = connectionFactory.createConnection();
+//            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+//            MessageProducer producer = session.createProducer(this.queue);
+//            ObjectMessage message = session.createObjectMessage();
+//            message.setObject(notification);
+//            producer.send(message);
+//            session.close();
+//            connection.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public String requestShipping(String shippingCompanyName, String username) {
+//
+//        Customer customer = entityManager.find(Customer.class, username);
+//        ShippingCompany shippingCompany = entityManager.find(ShippingCompany.class, shippingCompanyName);
+//
+//
+//        if (shippingCompany == null) {
+//            submitOrder(customer.getUsername() + ","
+//                    + shippingCompanyName + " doesn't exist");
+//
+//            return "Shipping Company not found!";
+//
+//        }
+//
+//        for (int i = 0; i < shippingCompany.getLocations().size(); i++) {
+//            if (shippingCompany.getLocations().get(i).getLocationName().equals(customer.getAddress())) {
+//                customer.getOrder().setOrderStatus("shipping");
+//                entityManager.getTransaction().begin();
+//                entityManager.merge(customer.getOrder());
+//                entityManager.getTransaction().commit();
+//
+//                submitOrder(customer.getUsername() + ", getting order shipped by company: "
+//                        + shippingCompanyName);
+//
+//                return "Shipping requested successfully!";
+//            }
+//        }
+//
+//        submitOrder(customer.getUsername() + ","
+//                + shippingCompanyName + " doesn't deliver to your location");
+//        return "Shipping Company can't deliver to your location";
+//
+//    }
+
 
 }
