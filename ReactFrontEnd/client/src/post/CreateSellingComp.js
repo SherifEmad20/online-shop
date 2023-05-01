@@ -19,7 +19,7 @@ function CreateSellingComp() {
    
 
     const onSubmit = (data)=>{
-        axios.post("http://localhost:18072/Admin-1.0-SNAPSHOT/api/admin/createSellingCompany",data).then((response)=>{
+        axios.post("http://localhost:18072/Company-1.0-SNAPSHOT/api/admin/createSellingCompany",data).then((response)=>{
            console.log(response)
             console.log("Added Successfuly");
             console.log(data);

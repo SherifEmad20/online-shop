@@ -3,6 +3,7 @@ import { useRef, useState,useEffect } from "react";
 import axios from "axios";
 import HomePage from '../HomePage';
 import '../styles/Login.css';
+import axiosCook from '../Cookies/Cookies';
 
 
 
@@ -72,13 +73,14 @@ function sleep(ms) {
     console.log(password)
       console.log(data);
 
-      axios.post("http://localhost:18072/Admin-1.0-SNAPSHOT/api/admin/login", data).then((response)=>{
+      axiosCook.post("http://localhost:18072/Company-1.0-SNAPSHOT/api/admin/login", data).then((response)=>{
         console.log(response.data);
          
       
           if(response.data === "Admin logged in successfully!"){
               setReg(true);
-             
+              const sessionId = response.headers['set-cookie'][0].split(';')[0].split('=')[1];
+              localStorage.setItem('sessionId', sessionId);
               }
               else{
                

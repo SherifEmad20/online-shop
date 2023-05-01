@@ -17,7 +17,7 @@ import java.util.List;
 @Singleton
 public class AdminBean {
 
-    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("mysql");
+    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("companyPU");
     private final EntityManager entityManager = emf.createEntityManager();
 
     @EJB

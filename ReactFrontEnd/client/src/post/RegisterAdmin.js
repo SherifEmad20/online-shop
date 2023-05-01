@@ -3,6 +3,7 @@ import { useRef, useState,useEffect } from "react";
 import axios from "axios";
 import HomePage from '../HomePage';
 import '../styles/Login.css';
+import axiosCook from '../Cookies/Cookies';
 
 
 
@@ -27,12 +28,15 @@ function Login() {
             e.preventDefault();
             console.log(data);
 
-            axios.post("http://localhost:18072/Admin-1.0-SNAPSHOT/api/admin/register", data).then((response)=>{
+            axiosCook.post("http://localhost:18072/Company-1.0-SNAPSHOT/api/admin/register", data).then((response)=>{
                
             
                 if(response.data == "Admin registered successfully!"){
                     setReg(true);
                     setLogOut(false)
+                    const sessionId = response.headers['set-cookie'][0].split(';')[0].split('=')[1];
+                    localStorage.setItem('sessionId', sessionId);
+      
                     }
                
                 }).catch(err =>{

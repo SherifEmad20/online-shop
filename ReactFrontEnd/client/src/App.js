@@ -40,6 +40,7 @@ function App() {
           <Route path='/' exact Component={MainHomePage}/>
           <Route path='/login' exact Component={Login}/>
           <Route path='/custRegister' exact Component={CustRegister}/>
+          <Route path='/adminRegister' exact Component={Register}/>
           <Route path='/custLogin' exact Component={CustLogin}/>
           <Route path='/getCompanies' exact Component={sellingComps}/>
           <Route path='/homePage' exact Component={HomePage}/>

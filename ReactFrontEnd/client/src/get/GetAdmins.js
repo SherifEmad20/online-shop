@@ -2,13 +2,20 @@ import React from 'react';
 import axios from "axios";
 import { useEffect, useState } from 'react';
 import '../styles/GetAdmins.css';
+import axiosCook from '../Cookies/Cookies';
+import Cookies from 'js-cookie';
 
 function GetAdmins() {
-
     const [listOfAdmins, setListOfAdmins] = useState([]);
+    const sessionId = Cookies.get('JSESSIONID')
 
   useEffect(()=>{
-    axios.get("http://localhost:18072/Admin-1.0-SNAPSHOT/api/admin/getAllAdmins").then((response)=>{
+    axiosCook.get("http://localhost:18072/Company-1.0-SNAPSHOT/api/admin/getAllAdmins",{
+    params: {
+      sessionId  
+    }
+
+    }).then((response)=>{
         setListOfAdmins(response.data);
     })
 
