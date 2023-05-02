@@ -96,6 +96,7 @@ function sleep(ms) {
           if(response.data === "Selling company logged in successfully!"){
               localStorage.clear();
               localStorage.setItem('loggedIn',username);
+              
               setReg(true);
              
               }
