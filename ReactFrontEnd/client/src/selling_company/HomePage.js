@@ -19,7 +19,7 @@ function HomePage() {
       <div className="wrapper">
          <ul>
             <li><a href="/addProduct">Add Product</a></li>
-            <li><a href="#">History</a></li>
+            <li><a href="/getSellProducts">List My Products</a></li>
             <li><a href="/">Logout</a></li>
            
          </ul>

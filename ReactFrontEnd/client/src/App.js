@@ -23,6 +23,7 @@ import GetCart from './customer/get/GetCart';
 import ReqShipping from './customer/post/RequestShipping';
 import GetShippingOrders from './customer/get/GetShippingOrders';
 import GetNotifications from './customer/get/GetNotifications';
+import GetSellProducts from './selling_company/GetMyProducst';
 import {BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom';
 
 
@@ -62,6 +63,7 @@ function App() {
           <Route path='/reqShipping' Component={ReqShipping}/>
           <Route path='/getShippingOrders' Component={GetShippingOrders}/>
           <Route path='/getNotifications' Component={GetNotifications}/>
+          <Route path='/getSellProducts' Component={GetSellProducts}/>
           
 
         </Routes>
