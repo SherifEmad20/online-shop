@@ -102,7 +102,7 @@ function sleep(ms) {
     console.log(Company)
    
 
-      axiosInstance.post(`http://localhost:18072/Company-1.0-SNAPSHOT/api/customer/makeShippingRequest/${Company}/3`).then((response)=>{
+      axiosInstance.post(`http://localhost:18072/Company-1.0-SNAPSHOT/api/customer/makeShippingRequest/${Company}/${currentId}`).then((response)=>{
         console.log(response.data);
         
          

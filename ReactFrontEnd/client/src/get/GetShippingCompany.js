@@ -42,6 +42,7 @@ function GetAdmins() {
     <tr>
       <th>Company Name</th>
       <th>UserName</th>
+      <th>Password</th>
       
     </tr>
   </thead>
@@ -52,6 +53,7 @@ function GetAdmins() {
           return <tr>
              <td>{value.companyName}</td>
              <td>{value.username}</td>
+             <td>{value.password}</td>
              
              </tr>
           
