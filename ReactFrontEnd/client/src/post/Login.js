@@ -3,7 +3,6 @@ import { useRef, useState,useEffect } from "react";
 import axios from "axios";
 import HomePage from '../HomePage';
 import '../styles/Login.css';
-import axiosCook from '../Cookies/Cookies';
 import Cookies from 'js-cookie';
 
 

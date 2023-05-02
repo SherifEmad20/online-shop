@@ -2,7 +2,6 @@ import React from 'react';
 import axios from "axios";
 import { useEffect, useState } from 'react';
 import '../styles/GetAdmins.css';
-import axiosCook from '../Cookies/Cookies';
 import Cookies from 'js-cookie';
 
 function GetAdmins() {
