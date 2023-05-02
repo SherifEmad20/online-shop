@@ -3,7 +3,6 @@ package com.example.company.Customer;
 import com.example.company.Notifications.Notifications;
 import com.example.company.Order.Order;
 import com.example.company.Product.Product;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.ejb.Stateful;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

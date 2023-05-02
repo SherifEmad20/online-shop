@@ -1,13 +1,10 @@
 package com.example.company.Order;
 
-import com.example.company.Customer.Customer;
-import com.example.company.Product.Product;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Stateless

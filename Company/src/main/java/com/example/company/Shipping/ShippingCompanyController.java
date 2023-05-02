@@ -3,9 +3,7 @@ package com.example.company.Shipping;
 import jakarta.annotation.ManagedBean;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 
 import java.io.Serializable;

@@ -1,17 +1,12 @@
 package com.example.company.Shipping;
 
-import com.example.company.Customer.Customer;
-import com.example.company.Order.Order;
 import jakarta.annotation.Resource;
 import jakarta.ejb.Stateful;
 import jakarta.jms.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import jakarta.servlet.http.HttpServletRequest;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import java.security.SecureRandom;
 import java.util.List;
 

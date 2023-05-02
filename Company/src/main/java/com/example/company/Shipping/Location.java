@@ -1,7 +1,6 @@
 package com.example.company.Shipping;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.ejb.Stateless;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

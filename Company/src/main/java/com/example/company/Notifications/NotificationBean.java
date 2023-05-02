@@ -2,7 +2,6 @@ package com.example.company.Notifications;
 
 import com.example.company.Customer.Customer;
 import jakarta.ejb.MessageDriven;
-import jakarta.ejb.Stateful;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
