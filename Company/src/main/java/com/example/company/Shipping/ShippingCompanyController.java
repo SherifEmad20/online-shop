@@ -3,7 +3,9 @@ package com.example.company.Shipping;
 import jakarta.annotation.ManagedBean;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 
 import java.io.Serializable;
@@ -60,12 +62,4 @@ public class ShippingCompanyController implements Serializable {
     public String addLocation(@PathParam("username") String username, Location location) {
         return shippingCompanyBean.addLocation(username, location);
     }
-
-//    @POST
-//    @Path("/makeShippingRequest/{shippingCompanyName}/{customerUsername}")
-//    public String makeShippingRequest(@PathParam("shippingCompanyName") String shippingCompanyName,
-//                                      @PathParam("customerUsername") String customerName) {
-//        return shippingCompanyBean.requestShipping(shippingCompanyName, customerName);
-//    }
-
 }

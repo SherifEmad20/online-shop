@@ -97,9 +97,10 @@ public class CustomerController implements Serializable {
 
     // make a shipping request
     @POST
-    @Path("/makeShippingRequest/{shippingCompanyName}")
-    public String makeShippingRequest(@PathParam("shippingCompanyName") String shippingCompanyName) {
-        return customerBean.requestShipping(shippingCompanyName);
+    @Path("/makeShippingRequest/{shippingCompanyName}/{orderId}")
+    public String makeShippingRequest(@PathParam("shippingCompanyName") String shippingCompanyName
+            , @PathParam("orderId") Long orderId) {
+        return customerBean.requestShipping(shippingCompanyName, orderId);
     }
 
 

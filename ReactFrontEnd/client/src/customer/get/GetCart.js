@@ -47,18 +47,11 @@ function GetAdmins() {
   function Navigate(){
     if(flag){
       
-      return [
-      <p className='retMes'>Order is Done</p>,
-      window.location='/custHomePage'
-    ]
-        
-      
-      
+        return [
+        <p className='retMes'>Order is Done</p>,
+        window.location='/custHomePage'
+      ] 
     }
- 
-  
-    
-   
   }
   return (
     <div className="App">

@@ -6,7 +6,6 @@ import com.example.company.Shipping.ShippingCompany;
 import jakarta.annotation.Resource;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateful;
-import jakarta.enterprise.context.SessionScoped;
 import jakarta.jms.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -15,7 +14,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.core.Context;
 
 import javax.naming.InitialContext;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -199,7 +197,7 @@ public class CustomerBean {
             entityManager.persist(order);
             entityManager.getTransaction().commit();
 
-            this.customer.setOrder(order);
+            this.customer.getOrder().add(order);
 
             // clear customer cart and add products to order
             for (int i = 0; i < this.customer.getCart().size(); i++) {
@@ -231,9 +229,10 @@ public class CustomerBean {
         }
     }
 
-    public String requestShipping(String shippingCompanyName) {
+    public String requestShipping(String shippingCompanyName, Long orderId) {
 
         ShippingCompany shippingCompany = entityManager.find(ShippingCompany.class, shippingCompanyName);
+        Order order = entityManager.find(Order.class, orderId);
 
         if (shippingCompany == null) {
             submitOrder(this.customer.getUsername() + ","
@@ -245,13 +244,14 @@ public class CustomerBean {
 
         for (int i = 0; i < shippingCompany.getLocations().size(); i++) {
             if (shippingCompany.getLocations().get(i).getLocationName().equals(this.customer.getAddress())) {
-                this.customer.getOrder().setOrderStatus("shipping");
+                order.setOrderStatus("shipping");
                 entityManager.getTransaction().begin();
-                entityManager.merge(this.customer.getOrder());
+                entityManager.merge(order);
                 entityManager.getTransaction().commit();
 
-                submitOrder(this.customer.getUsername() + ", getting order shipped by company: "
-                        + shippingCompanyName);
+
+                submitOrder(this.customer.getUsername() + ",order (" + order.getOrderId() +
+                        ") is being shipped by company: " + shippingCompanyName);
 
                 return "Shipping requested successfully!";
             }

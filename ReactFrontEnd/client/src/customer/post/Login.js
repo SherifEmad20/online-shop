@@ -78,7 +78,6 @@ function sleep(ms) {
       headers: {
         'Content-Type': 'application/json',
         Cookie: `JSESSIONID=${sessionId}`
-
           },
 
       withCredentials: true

@@ -2,6 +2,7 @@ package com.example.company.Order;
 
 import com.example.company.Customer.Customer;
 import com.example.company.Product.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,7 +30,8 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> products = new ArrayList<>();
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Customer> customers = new ArrayList<>();
 
 
