@@ -118,7 +118,7 @@ function sleep(ms) {
       </div>
     
       <div className="input-container ic2">
-        <input onChange={textChange} id="password" className="input" type="text" placeholder=" " />
+        <input onChange={textChange} id="password" className="input" type="password" placeholder=" " />
         <div className="cut"></div>
         <label htmlFor="password" type="password" className="placeholder">Password</label>
       </div>

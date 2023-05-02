@@ -6,6 +6,7 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Path("/product")
@@ -13,7 +14,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @ManagedBean
 @RequestScoped
-public class ProductController {
+public class ProductController implements Serializable {
 
 
     @EJB
